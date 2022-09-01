@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/latonaio/golang-logging-library/logger"
+	"github.com/latonaio/golang-logging-library-for-sap/logger"
 	sap_api_post_header_setup "github.com/latonaio/sap-api-post-header-setup"
 	"golang.org/x/xerrors"
 )
@@ -36,7 +36,7 @@ func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 	materialGroup *requests.PurchasingOrganizationPlant,
 	accepter []string) {
 	wg := &sync.WaitGroup{}
-	wg.Add(1)
+	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "General":
