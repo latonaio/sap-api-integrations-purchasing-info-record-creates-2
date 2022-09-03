@@ -32,8 +32,7 @@ func NewSAPAPICaller(baseUrl, sapClientNumber string, postClient *sap_api_post_h
 
 func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 	general *requests.General,
-	material *requests.PurchasingOrganizationPlant,
-	materialGroup *requests.PurchasingOrganizationPlant,
+	purchasingOrganizationPlant *requests.PurchasingOrganizationPlant,
 	accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
@@ -44,14 +43,9 @@ func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 				c.General(general)
 				wg.Done()
 			}()
-		case "Material":
+		case "PurchasingOrganizationPlant":
 			func() {
-				c.Material(material)
-				wg.Done()
-			}()
-		case "MaterialGroup":
-			func() {
-				c.MaterialGroup(materialGroup)
+				c.PurchasingOrganizationPlant(purchasingOrganizationPlant)
 				wg.Done()
 			}()
 		default:
@@ -95,50 +89,17 @@ func (c *SAPAPICaller) callPurchasingInfoRecordSrvAPIRequirementGeneral(api stri
 	return data, nil
 }
 
-func (c *SAPAPICaller) Material(material *requests.PurchasingOrganizationPlant) {
-	outputDataMaterial, err := c.callPurchasingInfoRecordSrvAPIRequirementMaterial("A_PurgInfoRecdOrgPlantData", material)
+func (c *SAPAPICaller) PurchasingOrganizationPlant(purchasingOrganizationPlant *requests.PurchasingOrganizationPlant) {
+	outputDataPurchasingOrganizationPlant, err := c.callPurchasingInfoRecordSrvAPIRequirementPurchasingOrganizationPlant("A_PurgInfoRecdOrgPlantData", purchasingOrganizationPlant)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-	c.log.Info(outputDataMaterial)
+	c.log.Info(outputDataPurchasingOrganizationPlant)
 }
 
-func (c *SAPAPICaller) callPurchasingInfoRecordSrvAPIRequirementMaterial(api string, material *requests.PurchasingOrganizationPlant) (*sap_api_output_formatter.PurchasingOrganizationPlant, error) {
-	body, err := json.Marshal(material)
-	if err != nil {
-		return nil, xerrors.Errorf("API request error: %w", err)
-	}
-	url := strings.Join([]string{c.baseURL, "API_INFORECORD_PROCESS_SRV", api}, "/")
-	params := c.addQuerySAPClient(map[string]string{})
-	resp, err := c.postClient.POST(url, params, string(body))
-	if err != nil {
-		return nil, xerrors.Errorf("API request error: %w", err)
-	}
-	defer resp.Body.Close()
-	byteArray, _ := ioutil.ReadAll(resp.Body)
-	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
-		return nil, xerrors.Errorf("bad response:%s", string(byteArray))
-	}
-
-	data, err := sap_api_output_formatter.ConvertToPurchasingOrganizationPlant(byteArray, c.log)
-	if err != nil {
-		return nil, xerrors.Errorf("convert error: %w", err)
-	}
-	return data, nil
-}
-
-func (c *SAPAPICaller) MaterialGroup(materialGroup *requests.PurchasingOrganizationPlant) {
-	outputDataMaterial, err := c.callPurchasingInfoRecordSrvAPIRequirementMaterial("A_PurgInfoRecdOrgPlantData", materialGroup)
-	if err != nil {
-		c.log.Error(err)
-		return
-	}
-	c.log.Info(outputDataMaterial)
-}
-
-func (c *SAPAPICaller) callPurchasingInfoRecordSrvAPIRequirementMaterialGroup(api string, materialGroiup *requests.PurchasingOrganizationPlant) (*sap_api_output_formatter.PurchasingOrganizationPlant, error) {
-	body, err := json.Marshal(materialGroiup)
+func (c *SAPAPICaller) callPurchasingInfoRecordSrvAPIRequirementPurchasingOrganizationPlant(api string, purchasingOrganizationPlant *requests.PurchasingOrganizationPlant) (*sap_api_output_formatter.PurchasingOrganizationPlant, error) {
+	body, err := json.Marshal(purchasingOrganizationPlant)
 	if err != nil {
 		return nil, xerrors.Errorf("API request error: %w", err)
 	}

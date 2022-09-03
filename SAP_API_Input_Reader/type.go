@@ -105,23 +105,61 @@ type SDC struct {
 			IsPurOrderAllwdForInbDeliv     *bool   `json:"IsPurOrderAllwdForInbDeliv"`
 			IsOrderAcknRqd                 *bool   `json:"IsOrderAcknRqd"`
 			IsMarkedForDeletion            *bool   `json:"IsMarkedForDeletion"`
-			PricingCondition               struct {
-				ConditionRecord            string  `json:"ConditionRecord"`
-				PurchasingOrganization     *string `json:"PurchasingOrganization"`
-				Supplier                   *string `json:"Supplier"`
-				Material                   *string `json:"Material"`
-				MaterialGroup              *string `json:"MaterialGroup"`
-				Plant                      *string `json:"Plant"`
-				ConditionValidityEndDate   *string `json:"ConditionValidityEndDate"`
-				ConditionValidityStartDate *string `json:"ConditionValidityStartDate"`
-				ConditionApplication       *string `json:"ConditionApplication"`
-				ConditionType              *string `json:"ConditionType"`
-				ConditionScaleQuantity     *string `json:"ConditionScaleQuantity"`
-				ConditionScaleQuantityUnit *string `json:"ConditionScaleQuantityUnit"`
-				ConditionScaleAmount       *string `json:"ConditionScaleAmount"`
-				ConditionRateValue         *string `json:"ConditionRateValue"`
-				ConditionQuantity          *string `json:"ConditionQuantity"`
-			} `json:"PricingCondition"`
+			PurInfoRecdPrcgCndnValidity    struct {
+				ConditionRecord              string `json:"ConditionRecord"`
+				ConditionValidityEndDate     string `json:"ConditionValidityEndDate"`
+				ConditionValidityStartDate   string `json:"ConditionValidityStartDate"`
+				ConditionApplication         string `json:"ConditionApplication"`
+				ConditionType                string `json:"ConditionType"`
+				PurgDocOrderQuantityUnit     string `json:"PurgDocOrderQuantityUnit"`
+				PurchasingOrganization       string `json:"PurchasingOrganization"`
+				PurchasingInfoRecordCategory string `json:"PurchasingInfoRecordCategory"`
+				PurchasingInfoRecord         string `json:"PurchasingInfoRecord"`
+				Supplier                     string `json:"Supplier"`
+				MaterialGroup                string `json:"MaterialGroup"`
+				Material                     string `json:"Material"`
+				Plant                        string `json:"Plant"`
+				PurInfoRecdPrcgCndn          struct {
+					ConditionRecord              string `json:"ConditionRecord"`
+					ConditionSequentialNumber    string `json:"ConditionSequentialNumber"`
+					ConditionApplication         string `json:"ConditionApplication"`
+					ConditionType                string `json:"ConditionType"`
+					ConditionValidityEndDate     string `json:"ConditionValidityEndDate"`
+					ConditionValidityStartDate   string `json:"ConditionValidityStartDate"`
+					CreatedByUser                string `json:"CreatedByUser"`
+					CreationDate                 string `json:"CreationDate"`
+					ConditionTextID              string `json:"ConditionTextID"`
+					PricingScaleType             string `json:"PricingScaleType"`
+					PricingScaleBasis            string `json:"PricingScaleBasis"`
+					ConditionScaleQuantity       string `json:"ConditionScaleQuantity"`
+					ConditionScaleQuantityUnit   string `json:"ConditionScaleQuantityUnit"`
+					ConditionScaleAmount         string `json:"ConditionScaleAmount"`
+					ConditionScaleAmountCurrency string `json:"ConditionScaleAmountCurrency"`
+					ConditionCalculationType     string `json:"ConditionCalculationType"`
+					ConditionRateValue           string `json:"ConditionRateValue"`
+					ConditionRateValueUnit       string `json:"ConditionRateValueUnit"`
+					ConditionQuantity            string `json:"ConditionQuantity"`
+					ConditionQuantityUnit        string `json:"ConditionQuantityUnit"`
+					ConditionToBaseQtyNmrtr      string `json:"ConditionToBaseQtyNmrtr"`
+					ConditionToBaseQtyDnmntr     string `json:"ConditionToBaseQtyDnmntr"`
+					BaseUnit                     string `json:"BaseUnit"`
+					ConditionLowerLimit          string `json:"ConditionLowerLimit"`
+					ConditionUpperLimit          string `json:"ConditionUpperLimit"`
+					ConditionAlternativeCurrency string `json:"ConditionAlternativeCurrency"`
+					ConditionExclusion           string `json:"ConditionExclusion"`
+					ConditionIsDeleted           bool   `json:"ConditionIsDeleted"`
+					AdditionalValueDays          string `json:"AdditionalValueDays"`
+					FixedValueDate               string `json:"FixedValueDate"`
+					PaymentTerms                 string `json:"PaymentTerms"`
+					CndnMaxNumberOfSalesOrders   string `json:"CndnMaxNumberOfSalesOrders"`
+					MinimumConditionBasisValue   string `json:"MinimumConditionBasisValue"`
+					MaximumConditionBasisValue   string `json:"MaximumConditionBasisValue"`
+					MaximumConditionAmount       string `json:"MaximumConditionAmount"`
+					IncrementalScale             string `json:"IncrementalScale"`
+					PricingScaleLine             string `json:"PricingScaleLine"`
+					ConditionReleaseStatus       string `json:"ConditionReleaseStatus"`
+				} `json:"PurInfoRecdPrcgCndn"`
+			} `json:"PurInfoRecdPrcgCndnValidity"`
 		} `json:"PurchasingOrganizationPlant"`
 	} `json:"PurchasingInfoRecord"`
 	APISchema  string   `json:"api_schema"`

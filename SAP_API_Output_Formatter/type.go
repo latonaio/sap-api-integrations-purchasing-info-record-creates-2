@@ -30,6 +30,7 @@ type General struct {
 	LastChangeDateTime          string `json:"LastChangeDateTime"`
 	IsDeleted                   bool   `json:"IsDeleted"`
 }
+
 type PurchasingOrganizationPlant struct {
 	PurchasingInfoRecord           string `json:"PurchasingInfoRecord"`
 	PurchasingInfoRecordCategory   string `json:"PurchasingInfoRecordCategory"`
@@ -61,5 +62,4 @@ type PurchasingOrganizationPlant struct {
 	IsPurOrderAllwdForInbDeliv     bool   `json:"IsPurOrderAllwdForInbDeliv"`
 	IsOrderAcknRqd                 bool   `json:"IsOrderAcknRqd"`
 	IsMarkedForDeletion            bool   `json:"IsMarkedForDeletion"`
-	ToPurInfoRecdPrcgCndnValidity  string `json:"to_PurInfoRecdPrcgCndnValidity"`
 }

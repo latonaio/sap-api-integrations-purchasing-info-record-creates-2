@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"sap-api-integrations-purchasing-info-record-creates/SAP_API_Caller/responses"
 
-	"github.com/latonaio/golang-logging-library/logger"
+	"github.com/latonaio/golang-logging-library-for-sap/logger"
 	"golang.org/x/xerrors"
 )
 
@@ -38,7 +38,7 @@ func ConvertToGeneral(raw []byte, l *logger.Logger) (*General, error) {
 	return general, nil
 }
 
-func ConvertToPurchasingOrganizationPlant(raw []byte, l *logger.Logger) ([]PurchasingOrganizationPlant, error) {
+func ConvertToPurchasingOrganizationPlant(raw []byte, l *logger.Logger) (*PurchasingOrganizationPlant, error) {
 	pm := &responses.PurchasingOrganizationPlant{}
 	err := json.Unmarshal(raw, pm)
 	if err != nil {

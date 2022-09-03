@@ -38,7 +38,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"General" が指定されています。
 
 ```
-	"api_schema": "/sap.s4.beh.purchasinginforecord.v1.PurchasingInfoRecord.Created.v1",
+	"api_schema": "SAPPurchasingInfoRecordCreates",
 	"accepter": ["General"],
 	"purchasing_info_record": "",
 	"deleted": false
@@ -49,7 +49,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを登録する場合、sample.json は以下のように記載します。  
 
 ```
-	"api_schema": "/sap.s4.beh.purchasinginforecord.v1.PurchasingInfoRecord.Created.v1",
+	"api_schema": "SAPPurchasingInfoRecordCreates",
 	"accepter": ["All"],
 	"purchasing_info_record": "",
 	"deleted": false
@@ -63,11 +63,11 @@ caller.go の func() 毎 の 以下の箇所が、指定された API をコー�
 ```
 func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 	general *requests.General,
-	material *requests.PurchasingOrganizationPlant,
+	purchasingOrganizationPlant *requests.PurchasingOrganizationPlant,
 	materialGroup *requests.PurchasingOrganizationPlant,
 	accepter []string) {
 	wg := &sync.WaitGroup{}
-	wg.Add(1)
+	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "General":
@@ -75,14 +75,9 @@ func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 				c.General(general)
 				wg.Done()
 			}()
-		case "Material":
+		case "PurchasingOrganizationPlant":
 			func() {
-				c.Material(material)
-				wg.Done()
-			}()
-		case "MaterialGroup":
-			func() {
-				c.MaterialGroup(materialGroup)
+				c.PurchasingOrganizationPlant(purchasingOrganizationPlant)
 				wg.Done()
 			}()
 		default:
@@ -100,10 +95,9 @@ func (c *SAPAPICaller) AsyncPostPurchasingInfoRecord(
 以下の項目のうち、"XXXXX" ～ "XXXXX" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-creates/SAP_API_Caller/caller.go#L50",
-	"function": "sap-api-integrations-creates/SAP_API_Caller.(*SAPAPICaller).Header",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-purchasing-info-record-creates/SAP_API_Caller/caller.go#L50",
+	"function": "sap-api-integrations-purchasing-info-record-creates/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
 	"message": "[{XXXXXXXXXXXXXXXXXXXXXXXXXXXXX}]",
 	"time": "2021-12-11T15:33:00.054455+09:00"
 ```
-
